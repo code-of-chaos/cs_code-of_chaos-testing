@@ -4,7 +4,7 @@
 using CodeOfChaos.CliArgsParser;
 using CodeOfChaos.CliArgsParser.Library;
 
-namespace Tools.TEMPLATE;
+namespace Tools.CodeOfChaos.Testing.TUnit;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
