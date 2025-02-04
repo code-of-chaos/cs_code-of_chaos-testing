@@ -1,16 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Testing.TUnit.Conditions;
 using CodeOfChaos.Testing.TUnit.Conditions.Library;
 using Microsoft.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using TUnit.Assertions.AssertConditions;
 using TUnit.Assertions.AssertConditions.Interfaces;
 using TUnit.Assertions.AssertionBuilders;
 
 namespace CodeOfChaos.Testing.TUnit;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -18,31 +15,31 @@ namespace CodeOfChaos.Testing.TUnit;
 public static class TUnitExtensionsCompilation {
     public static InvokableValueAssertionBuilder<Compilation> ContainsDiagnostic(this IValueSource<Compilation> valueSource, string expectedId, [CallerArgumentExpression(nameof(expectedId))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
-            assertCondition: new ContainsDiagnosticAssertCondition<Compilation>(
-                static compilation => ValueTask.FromResult(compilation.GetDiagnostics()), 
+            new ContainsDiagnosticAssertCondition<Compilation>(
+                getDiagnosticsAction: static compilation => ValueTask.FromResult(compilation.GetDiagnostics()),
                 expectedId
             ),
-            argumentExpressions: [doNotPopulateThisValue1]
+            [doNotPopulateThisValue1]
         );
     }
-    
+
     public static InvokableValueAssertionBuilder<Compilation> DoesNotContainDiagnostic(this IValueSource<Compilation> valueSource, string expectedId, [CallerArgumentExpression(nameof(expectedId))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
-            assertCondition: new DoesNotContainDiagnosticAssertCondition<Compilation>(
-                static compilation => ValueTask.FromResult(compilation.GetDiagnostics()), 
+            new DoesNotContainDiagnosticAssertCondition<Compilation>(
+                getDiagnosticsAction: static compilation => ValueTask.FromResult(compilation.GetDiagnostics()),
                 expectedId
             ),
-            argumentExpressions: [doNotPopulateThisValue1]
+            [doNotPopulateThisValue1]
         );
     }
 
     public static InvokableValueAssertionBuilder<Compilation> ContainsDiagnosticsExclusively(this IValueSource<Compilation> valueSource, string[] expectedIds, [CallerArgumentExpression(nameof(expectedIds))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
-            assertCondition: new ContainsDiagnosticsExclusivelyAssertCondition<Compilation>(
-                static compilation => ValueTask.FromResult(compilation.GetDiagnostics()), 
+            new ContainsDiagnosticsExclusivelyAssertCondition<Compilation>(
+                getDiagnosticsAction: static compilation => ValueTask.FromResult(compilation.GetDiagnostics()),
                 expectedIds
             ),
-            argumentExpressions: [doNotPopulateThisValue1]
+            [doNotPopulateThisValue1]
         );
     }
 }

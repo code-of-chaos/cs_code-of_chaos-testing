@@ -8,33 +8,32 @@ using System.Collections.Immutable;
 using Tests.CodeOfChaos.Testing.TUnit.DataSources;
 
 namespace Tests.CodeOfChaos.Testing.TUnit;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 // ReSharper disable once InconsistentNaming
-public class TUnitExtensionsCompilationTests{
+public class TUnitExtensionsCompilationTests {
     [Test]
     public async Task ContainsDiagnostic_ShouldAssert() {
         // Arrange
         var runner = new RoslynCompilationRunner();
         runner.AddDocument("Test.cs", """
             namespace TestProject;
-            
+
             public class TestClass {
                 public void TestMethod() {
                     int unusedVariable; // Unused local variable triggers a warning diagnostic
                 }
             }
             """);
-        
+
         // Act
         Compilation compilation = await runner.GetCompilationAsync();
-        
+
         // Assert
         await Assert.That(compilation).ContainsDiagnostic("CS0168");
     }
-    
+
     [Test]
     public async Task DoesNotContainDiagnostic_ShouldAssert() {
         // Arrange
@@ -47,10 +46,10 @@ public class TUnitExtensionsCompilationTests{
                 }
             }
             """);
-        
+
         // Act
         Compilation compilation = await runner.GetCompilationAsync();
-        
+
         // Assert
         await Assert.That(compilation).DoesNotContainDiagnostic("CS0168");
     }
@@ -58,18 +57,18 @@ public class TUnitExtensionsCompilationTests{
     [Test]
     public async Task AddDiangosticAnalyzer_ShouldAssert() {
         // Arrange
-        var runner = new RoslynCompilationRunner()
-            .AddDocument("Test.cs", """
-                namespace TestProject {
-                    public class TestClass {
-                        public void TestMethod() {
+        RoslynCompilationRunner runner = new RoslynCompilationRunner()
+                .AddDocument("Test.cs", """
+                    namespace TestProject {
+                        public class TestClass {
+                            public void TestMethod() {
+                            }
                         }
                     }
-                }
-                """)
-            .AddDiagnosticAnalyzer<SimpleDiagnosticAnalyzer>()
+                    """)
+                .AddDiagnosticAnalyzer<SimpleDiagnosticAnalyzer>()
             ;
-        
+
         // Act
         CompilationWithAnalyzers compilation = await runner.GetCompilationWithAnalyzersAsync();
         ImmutableArray<Diagnostic> diagnostics = await compilation.GetAllDiagnosticsAsync();
@@ -77,5 +76,4 @@ public class TUnitExtensionsCompilationTests{
         // Assert
         await Assert.That(diagnostics).ContainsDiagnostic(SimpleDiagnosticAnalyzer.Descriptor.Id);
     }
-    
 }

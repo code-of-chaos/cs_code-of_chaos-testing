@@ -9,7 +9,6 @@ using TUnit.Assertions.AssertConditions.Interfaces;
 using TUnit.Assertions.AssertionBuilders;
 
 namespace CodeOfChaos.Testing.TUnit;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -17,31 +16,31 @@ namespace CodeOfChaos.Testing.TUnit;
 public static class TUnitExtensionsDiagnosticsImmutableArray {
     public static InvokableValueAssertionBuilder<ImmutableArray<Diagnostic>> ContainsDiagnostic(this IValueSource<ImmutableArray<Diagnostic>> valueSource, string expectedId, [CallerArgumentExpression(nameof(expectedId))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
-            assertCondition: new ContainsDiagnosticAssertCondition<ImmutableArray<Diagnostic>>(
-                static diagnostics => ValueTask.FromResult(diagnostics),
+            new ContainsDiagnosticAssertCondition<ImmutableArray<Diagnostic>>(
+                getDiagnosticsAction: static diagnostics => ValueTask.FromResult(diagnostics),
                 expectedId
             ),
-            argumentExpressions: [doNotPopulateThisValue1]
+            [doNotPopulateThisValue1]
         );
     }
-    
+
     public static InvokableValueAssertionBuilder<ImmutableArray<Diagnostic>> DoesNotContainDiagnostic(this IValueSource<ImmutableArray<Diagnostic>> valueSource, string expectedId, [CallerArgumentExpression(nameof(expectedId))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
-            assertCondition: new DoesNotContainDiagnosticAssertCondition<ImmutableArray<Diagnostic>>(
-                static diagnostics => ValueTask.FromResult(diagnostics),
+            new DoesNotContainDiagnosticAssertCondition<ImmutableArray<Diagnostic>>(
+                getDiagnosticsAction: static diagnostics => ValueTask.FromResult(diagnostics),
                 expectedId
             ),
-            argumentExpressions: [doNotPopulateThisValue1]
+            [doNotPopulateThisValue1]
         );
     }
 
     public static InvokableValueAssertionBuilder<ImmutableArray<Diagnostic>> ContainsDiagnosticsExclusively(this IValueSource<ImmutableArray<Diagnostic>> valueSource, string[] expectedIds, [CallerArgumentExpression(nameof(expectedIds))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
-            assertCondition: new ContainsDiagnosticsExclusivelyAssertCondition<ImmutableArray<Diagnostic>>(
-                static diagnostics => ValueTask.FromResult(diagnostics),
+            new ContainsDiagnosticsExclusivelyAssertCondition<ImmutableArray<Diagnostic>>(
+                getDiagnosticsAction: static diagnostics => ValueTask.FromResult(diagnostics),
                 expectedIds
             ),
-            argumentExpressions: [doNotPopulateThisValue1]
+            [doNotPopulateThisValue1]
         );
     }
 }
