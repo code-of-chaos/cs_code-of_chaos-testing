@@ -10,7 +10,7 @@ namespace CodeOfChaos.Testing.TUnit.Conditions;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class CompilationHasSourceTextEqualToCondition(string filename, string expected, StringComparison stringComparison, bool ignoreWhiteSpace, bool withTrimming)
+public class GeneratorDriverRunResultHasSourceTextEqualToCondition(string filename, string expected, StringComparison stringComparison, bool ignoreWhiteSpace, bool withTrimming)
     : ExpectedValueAssertCondition<GeneratorDriverRunResult, string>(expected) {
     private readonly string _expected = expected;
 
@@ -37,11 +37,5 @@ public class CompilationHasSourceTextEqualToCondition(string filename, string ex
         if(ignoreWhiteSpace) stringEqualsAssertCondition.IgnoringWhitespace();
 
         return await stringEqualsAssertCondition.GetAssertionResult(sourceTextString, null);
-        
-        // if (ignoreWhiteSpace) sourceTextString = string.Join(string.Empty, sourceTextString.Where(c => !char.IsWhiteSpace(c)));
-        // if (withTrimming) sourceTextString = sourceTextString.Trim();
-        //
-        // return AssertionResult
-        //     .FailIf(!string.Equals(sourceTextString, expectedValue, stringComparison), "Source text does not match"); 
     }
 }

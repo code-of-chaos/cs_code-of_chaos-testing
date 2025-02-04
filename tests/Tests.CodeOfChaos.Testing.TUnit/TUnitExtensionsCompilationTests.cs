@@ -3,10 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Testing.TUnit;
 using Microsoft.CodeAnalysis;
-using System.Runtime.CompilerServices;
-using TUnit.Assertions.AssertConditions;
-using TUnit.Assertions.AssertConditions.Interfaces;
-using TUnit.Assertions.AssertionBuilders;
 
 namespace Tests.CodeOfChaos.Testing.TUnit;
 
@@ -14,7 +10,7 @@ namespace Tests.CodeOfChaos.Testing.TUnit;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 // ReSharper disable once InconsistentNaming
-public class TUnitExtensionTests {
+public class TUnitExtensionsCompilationTests{
     [Test]
     public async Task ContainsDiagnostic_ShouldAssert() {
         // Arrange
@@ -35,6 +31,7 @@ public class TUnitExtensionTests {
         // Assert
         await Assert.That(compilation).ContainsDiagnostic("CS0168");
     }
+    
     [Test]
     public async Task DoesNotContainDiagnostic_ShouldAssert() {
         // Arrange

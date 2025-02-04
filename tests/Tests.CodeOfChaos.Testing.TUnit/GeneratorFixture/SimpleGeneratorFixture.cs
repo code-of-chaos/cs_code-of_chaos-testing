@@ -1,17 +1,23 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Testing.TUnit.Conditions.Library;
 using Microsoft.CodeAnalysis;
-using System.Collections.Immutable;
 
-namespace CodeOfChaos.Testing.TUnit.Conditions;
+namespace Tests.CodeOfChaos.Testing.TUnit.GeneratorFixture;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class CompilationDoesNotContainDiagnosticAssertCondition(string expectedId)
-    : DoesNotContainDiagnosticAssertCondition<Compilation>(expectedId) {
-
-    protected override ImmutableArray<Diagnostic> GetDiagnostics(Compilation value) => value.GetDiagnostics();
+public class SimpleGeneratorFixture : IIncrementalGenerator {
+    public const string CodeBlock = """
+    namespace CodeOfChaos.Testing.TUnit.GeneratorFixture;
+    class SimpleGeneratorStuff { }
+    """;
+    public const string FileName = "SimpleGenerator.cs";
+        
+    public void Initialize(IncrementalGeneratorInitializationContext context) {
+        context.RegisterPostInitializationOutput(ctx => {
+            ctx.AddSource(FileName, CodeBlock);
+        });
+    }
 }

@@ -56,6 +56,13 @@ public class RoslynCompilationRunner(string? name = null, LanguageVersion langua
     private static PortableExecutableReference GetMetadataReference(Type type) => GetMetadataReference(type.Assembly);
     #endregion
 
+    public async ValueTask<RoslynGeneratorRunner> GetGeneratorRunnerAsync() {
+        Compilation compilation = await GetCompilationAsync();
+        return new RoslynGeneratorRunner(languageVersion) {
+            Compilation = compilation
+        };
+    }
+    
     public async ValueTask<Compilation> GetCompilationAsync() {
         // Resolve all assemblies
         Project = _assemblyReferences.Aggregate(Project, (current, reference) => current.AddMetadataReference(reference));
