@@ -19,7 +19,7 @@ public static class TUnitExtensionsCompilation {
     public static InvokableValueAssertionBuilder<Compilation> ContainsDiagnostic(this IValueSource<Compilation> valueSource, string expectedId, [CallerArgumentExpression(nameof(expectedId))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
             assertCondition: new ContainsDiagnosticAssertCondition<Compilation>(
-                static compilation => compilation.GetDiagnostics(), 
+                static compilation => ValueTask.FromResult(compilation.GetDiagnostics()), 
                 expectedId
             ),
             argumentExpressions: [doNotPopulateThisValue1]
@@ -29,7 +29,7 @@ public static class TUnitExtensionsCompilation {
     public static InvokableValueAssertionBuilder<Compilation> DoesNotContainDiagnostic(this IValueSource<Compilation> valueSource, string expectedId, [CallerArgumentExpression(nameof(expectedId))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
             assertCondition: new DoesNotContainDiagnosticAssertCondition<Compilation>(
-                static compilation => compilation.GetDiagnostics(), 
+                static compilation => ValueTask.FromResult(compilation.GetDiagnostics()), 
                 expectedId
             ),
             argumentExpressions: [doNotPopulateThisValue1]
@@ -39,7 +39,7 @@ public static class TUnitExtensionsCompilation {
     public static InvokableValueAssertionBuilder<Compilation> ContainsDiagnosticsExclusively(this IValueSource<Compilation> valueSource, string[] expectedIds, [CallerArgumentExpression(nameof(expectedIds))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
             assertCondition: new ContainsDiagnosticsExclusivelyAssertCondition<Compilation>(
-                static compilation => compilation.GetDiagnostics(), 
+                static compilation => ValueTask.FromResult(compilation.GetDiagnostics()), 
                 expectedIds
             ),
             argumentExpressions: [doNotPopulateThisValue1]

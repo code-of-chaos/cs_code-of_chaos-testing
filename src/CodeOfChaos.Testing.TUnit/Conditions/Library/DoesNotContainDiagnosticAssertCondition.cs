@@ -10,7 +10,7 @@ namespace CodeOfChaos.Testing.TUnit.Conditions.Library;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class DoesNotContainDiagnosticAssertCondition<T>(Func<T, ImmutableArray<Diagnostic>> getDiagnosticsAction, string expectedId)
+public class DoesNotContainDiagnosticAssertCondition<T>(Func<T, ValueTask<ImmutableArray<Diagnostic>>> getDiagnosticsAction, string expectedId)
     : ExpectedValueAssertCondition<T, string>(expectedId) {
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -18,11 +18,11 @@ public class DoesNotContainDiagnosticAssertCondition<T>(Func<T, ImmutableArray<D
     // -----------------------------------------------------------------------------------------------------------------
 
     protected override string GetExpectation() => $"to not have a diagnostic with Id \"{ExpectedValue}\"";
-    protected override Task<AssertionResult> GetResult(T? actualValue, string? expectedValue) {
+    protected override async Task<AssertionResult> GetResult(T? actualValue, string? expectedValue) {
         if (actualValue is null) return AssertionResult.Fail($"{nameof(T)} is null");
         if (expectedValue is null) return AssertionResult.Fail("Expected value is null");
         
-        ImmutableArray<Diagnostic> diagnostics = getDiagnosticsAction(actualValue);
+        ImmutableArray<Diagnostic> diagnostics = await getDiagnosticsAction(actualValue);
 
         if (diagnostics.Any(d => d.Id == expectedValue)) return FailWithMessage("Diagnostic with Id");
 

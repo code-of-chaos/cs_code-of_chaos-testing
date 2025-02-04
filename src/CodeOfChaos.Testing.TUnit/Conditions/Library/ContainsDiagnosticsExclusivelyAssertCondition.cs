@@ -10,18 +10,18 @@ namespace CodeOfChaos.Testing.TUnit.Conditions.Library;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class ContainsDiagnosticsExclusivelyAssertCondition<T>(Func<T, ImmutableArray<Diagnostic>> getDiagnosticsAction, string[] expectedIds)
+public class ContainsDiagnosticsExclusivelyAssertCondition<T>(Func<T, ValueTask<ImmutableArray<Diagnostic>>> getDiagnosticsAction, string[] expectedIds)
     : ExpectedValueAssertCondition<T, string[]>(expectedIds) {
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected override string GetExpectation() => $"to have a compilation output with the following Ids \"{ExpectedValue}\"";
-    protected override Task<AssertionResult> GetResult(T? actualValue, string[]? expectedValues) {
+    protected override async Task<AssertionResult> GetResult(T? actualValue, string[]? expectedValues) {
         if (actualValue is null) return AssertionResult.Fail($"{nameof(T)} is null");
         if (expectedValues is null) return AssertionResult.Fail("Expected value is null");
         
-        ImmutableArray<Diagnostic> diagnostics = getDiagnosticsAction(actualValue);
+        ImmutableArray<Diagnostic> diagnostics = await getDiagnosticsAction(actualValue);
         if (!diagnostics.Any() && expectedValues.Length == 0) return AssertionResult.Passed;
         if (!diagnostics.Any()) return FailWithMessage("No diagnostics");
         if (expectedValues.Length != diagnostics.Length) return FailWithMessage("Wrong number of diagnostics");

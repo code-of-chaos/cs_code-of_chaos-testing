@@ -18,7 +18,7 @@ public static class TUnitExtensionsDiagnosticsImmutableArray {
     public static InvokableValueAssertionBuilder<ImmutableArray<Diagnostic>> ContainsDiagnostic(this IValueSource<ImmutableArray<Diagnostic>> valueSource, string expectedId, [CallerArgumentExpression(nameof(expectedId))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
             assertCondition: new ContainsDiagnosticAssertCondition<ImmutableArray<Diagnostic>>(
-                static diagnostics => diagnostics,
+                static diagnostics => ValueTask.FromResult(diagnostics),
                 expectedId
             ),
             argumentExpressions: [doNotPopulateThisValue1]
@@ -28,7 +28,7 @@ public static class TUnitExtensionsDiagnosticsImmutableArray {
     public static InvokableValueAssertionBuilder<ImmutableArray<Diagnostic>> DoesNotContainDiagnostic(this IValueSource<ImmutableArray<Diagnostic>> valueSource, string expectedId, [CallerArgumentExpression(nameof(expectedId))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
             assertCondition: new DoesNotContainDiagnosticAssertCondition<ImmutableArray<Diagnostic>>(
-                static diagnostics => diagnostics,
+                static diagnostics => ValueTask.FromResult(diagnostics),
                 expectedId
             ),
             argumentExpressions: [doNotPopulateThisValue1]
@@ -38,7 +38,7 @@ public static class TUnitExtensionsDiagnosticsImmutableArray {
     public static InvokableValueAssertionBuilder<ImmutableArray<Diagnostic>> ContainsDiagnosticsExclusively(this IValueSource<ImmutableArray<Diagnostic>> valueSource, string[] expectedIds, [CallerArgumentExpression(nameof(expectedIds))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
             assertCondition: new ContainsDiagnosticsExclusivelyAssertCondition<ImmutableArray<Diagnostic>>(
-                static diagnostics => diagnostics,
+                static diagnostics => ValueTask.FromResult(diagnostics),
                 expectedIds
             ),
             argumentExpressions: [doNotPopulateThisValue1]
