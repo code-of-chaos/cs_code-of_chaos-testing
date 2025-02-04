@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Testing.TUnit.Conditions;
+using CodeOfChaos.Testing.TUnit.Conditions.Library;
 using Microsoft.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using TUnit.Assertions.AssertConditions;
@@ -17,21 +18,30 @@ namespace CodeOfChaos.Testing.TUnit;
 public static class TUnitExtensionsCompilation {
     public static InvokableValueAssertionBuilder<Compilation> ContainsDiagnostic(this IValueSource<Compilation> valueSource, string expectedId, [CallerArgumentExpression(nameof(expectedId))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
-            assertCondition: new CompilationContainsDiagnosticAssertCondition(expectedId),
+            assertCondition: new ContainsDiagnosticAssertCondition<Compilation>(
+                static compilation => compilation.GetDiagnostics(), 
+                expectedId
+            ),
             argumentExpressions: [doNotPopulateThisValue1]
         );
     }
     
     public static InvokableValueAssertionBuilder<Compilation> DoesNotContainDiagnostic(this IValueSource<Compilation> valueSource, string expectedId, [CallerArgumentExpression(nameof(expectedId))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
-            assertCondition: new CompilationDoesNotContainDiagnosticAssertCondition(expectedId),
+            assertCondition: new DoesNotContainDiagnosticAssertCondition<Compilation>(
+                static compilation => compilation.GetDiagnostics(), 
+                expectedId
+            ),
             argumentExpressions: [doNotPopulateThisValue1]
         );
     }
 
     public static InvokableValueAssertionBuilder<Compilation> ContainsDiagnosticsExclusively(this IValueSource<Compilation> valueSource, string[] expectedIds, [CallerArgumentExpression(nameof(expectedIds))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
-            assertCondition: new CompilationContainsDiagnosticsExclusivelyAssertCondition(expectedIds),
+            assertCondition: new ContainsDiagnosticsExclusivelyAssertCondition<Compilation>(
+                static compilation => compilation.GetDiagnostics(), 
+                expectedIds
+            ),
             argumentExpressions: [doNotPopulateThisValue1]
         );
     }

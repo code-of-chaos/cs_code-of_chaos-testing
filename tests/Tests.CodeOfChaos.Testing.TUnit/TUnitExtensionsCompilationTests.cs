@@ -3,6 +3,9 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Testing.TUnit;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Diagnostics;
+using System.Collections.Immutable;
+using Tests.CodeOfChaos.Testing.TUnit.DataSources;
 
 namespace Tests.CodeOfChaos.Testing.TUnit;
 
@@ -51,4 +54,28 @@ public class TUnitExtensionsCompilationTests{
         // Assert
         await Assert.That(compilation).DoesNotContainDiagnostic("CS0168");
     }
+
+    [Test]
+    public async Task AddDiangosticAnalyzer_ShouldAssert() {
+        // Arrange
+        var runner = new RoslynCompilationRunner()
+            .AddDocument("Test.cs", """
+                namespace TestProject {
+                    public class TestClass {
+                        public void TestMethod() {
+                        }
+                    }
+                }
+                """)
+            .AddDiagnosticAnalyzer<SimpleDiagnosticAnalyzer>()
+            ;
+        
+        // Act
+        CompilationWithAnalyzers compilation = await runner.GetCompilationWithAnalyzersAsync();
+        ImmutableArray<Diagnostic> diagnostics = await compilation.GetAllDiagnosticsAsync();
+
+        // Assert
+        await Assert.That(diagnostics).ContainsDiagnostic(SimpleDiagnosticAnalyzer.Descriptor.Id);
+    }
+    
 }

@@ -3,14 +3,14 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using Microsoft.CodeAnalysis;
 
-namespace Tests.CodeOfChaos.Testing.TUnit.GeneratorFixture;
+namespace Tests.CodeOfChaos.Testing.TUnit.DataSources;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class GeneratorWithDiagnostic : IIncrementalGenerator {
     public const string CodeBlock = """
-        namespace CodeOfChaos.Testing.TUnit.GeneratorFixture;
+        namespace CodeOfChaos.Testing.TUnit.DataSources;
         class SimpleGeneratorStuff { }
         """;
     public const string FileName = "GeneratorWithDiagnostic.cs";

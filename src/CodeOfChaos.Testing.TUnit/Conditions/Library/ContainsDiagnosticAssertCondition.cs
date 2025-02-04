@@ -10,10 +10,7 @@ namespace CodeOfChaos.Testing.TUnit.Conditions.Library;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public abstract class ContainsDiagnosticAssertCondition<T>(string expectedId): ExpectedValueAssertCondition<T, string>(expectedId) {
-    
-    protected abstract ImmutableArray<Diagnostic> GetDiagnostics(T value);
-
+public class ContainsDiagnosticAssertCondition<T>(Func<T, ImmutableArray<Diagnostic>> getDiagnosticsAction, string expectedId): ExpectedValueAssertCondition<T, string>(expectedId) {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -22,7 +19,7 @@ public abstract class ContainsDiagnosticAssertCondition<T>(string expectedId): E
         if (actualValue is null) return AssertionResult.Fail($"{nameof(T)} is null");
         if (expectedValue is null) return AssertionResult.Fail("Expected value is null");
             
-        ImmutableArray<Diagnostic> diagnostics = GetDiagnostics(actualValue);
+        ImmutableArray<Diagnostic> diagnostics = getDiagnosticsAction(actualValue);
         if (!diagnostics.Any()) return FailWithMessage("No diagnostics");
         if (diagnostics.Any(d => d.Id == expectedValue)) return AssertionResult.Passed;
         return FailWithMessage("No diagnostic with Id");

@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Testing.TUnit.Conditions;
+using CodeOfChaos.Testing.TUnit.Conditions.Library;
 using Microsoft.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using TUnit.Assertions.AssertConditions.Interfaces;
@@ -24,21 +25,30 @@ public static class TUnitExtensionsGeneratorDriverRunResult {
     
     public static InvokableValueAssertionBuilder<GeneratorDriverRunResult> ContainsDiagnostic(this IValueSource<GeneratorDriverRunResult> valueSource, string expectedId, [CallerArgumentExpression(nameof(expectedId))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
-            assertCondition: new GeneratorDriverRunResultContainsDiagnosticAssertCondition(expectedId),
+            assertCondition: new ContainsDiagnosticAssertCondition<GeneratorDriverRunResult>(
+                static runResult => runResult.Diagnostics,
+                expectedId
+            ),
             argumentExpressions: [doNotPopulateThisValue1]
         );
     }
     
     public static InvokableValueAssertionBuilder<GeneratorDriverRunResult> DoesNotContainDiagnostic(this IValueSource<GeneratorDriverRunResult> valueSource, string expectedId, [CallerArgumentExpression(nameof(expectedId))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
-            assertCondition: new GeneratorDriverRunResultDoesNotContainDiagnosticAssertCondition(expectedId),
+            assertCondition: new DoesNotContainDiagnosticAssertCondition<GeneratorDriverRunResult>(
+                static runResult => runResult.Diagnostics,
+                expectedId
+            ),
             argumentExpressions: [doNotPopulateThisValue1]
         );
     }
 
     public static InvokableValueAssertionBuilder<GeneratorDriverRunResult> ContainsDiagnosticsExclusively(this IValueSource<GeneratorDriverRunResult> valueSource, string[] expectedIds, [CallerArgumentExpression(nameof(expectedIds))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
-            assertCondition: new GeneratorDriverRunResultContainsDiagnosticsExclusivelyAssertCondition(expectedIds),
+            assertCondition: new ContainsDiagnosticsExclusivelyAssertCondition<GeneratorDriverRunResult>(
+                static runResult => runResult.Diagnostics,
+                expectedIds
+            ),
             argumentExpressions: [doNotPopulateThisValue1]
         );
     }

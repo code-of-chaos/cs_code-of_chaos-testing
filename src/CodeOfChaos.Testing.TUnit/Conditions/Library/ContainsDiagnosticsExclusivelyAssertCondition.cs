@@ -10,10 +10,8 @@ namespace CodeOfChaos.Testing.TUnit.Conditions.Library;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public abstract class ContainsDiagnosticsExclusivelyAssertCondition<T>(string[] expectedIds)
+public class ContainsDiagnosticsExclusivelyAssertCondition<T>(Func<T, ImmutableArray<Diagnostic>> getDiagnosticsAction, string[] expectedIds)
     : ExpectedValueAssertCondition<T, string[]>(expectedIds) {
-    
-    protected abstract ImmutableArray<Diagnostic> GetDiagnostics(T value);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -23,7 +21,7 @@ public abstract class ContainsDiagnosticsExclusivelyAssertCondition<T>(string[] 
         if (actualValue is null) return AssertionResult.Fail($"{nameof(T)} is null");
         if (expectedValues is null) return AssertionResult.Fail("Expected value is null");
         
-        ImmutableArray<Diagnostic> diagnostics = GetDiagnostics(actualValue);
+        ImmutableArray<Diagnostic> diagnostics = getDiagnosticsAction(actualValue);
         if (!diagnostics.Any() && expectedValues.Length == 0) return AssertionResult.Passed;
         if (!diagnostics.Any()) return FailWithMessage("No diagnostics");
         if (expectedValues.Length != diagnostics.Length) return FailWithMessage("Wrong number of diagnostics");

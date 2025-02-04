@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Testing.TUnit;
 using Microsoft.CodeAnalysis;
-using Tests.CodeOfChaos.Testing.TUnit.GeneratorFixture;
+using Tests.CodeOfChaos.Testing.TUnit.DataSources;
 
 namespace Tests.CodeOfChaos.Testing.TUnit;
 
@@ -33,6 +33,5 @@ public class UnitExtensionsGeneratorDriverRunResultTests(SimpleGeneratorFixture 
             .HasSourceTextEqualTo(SimpleGeneratorFixture.FileName, SimpleGeneratorFixture.CodeBlock)
             .And.HasSourceTextEqualTo(GeneratorWithDiagnostic.FileName, GeneratorWithDiagnostic.CodeBlock)
             .And.ContainsDiagnostic(GeneratorWithDiagnostic.Descriptor.Id);
-
     }
 }

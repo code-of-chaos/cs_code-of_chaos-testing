@@ -4,7 +4,9 @@
 using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Diagnostics;
 using System.Collections.Concurrent;
+using System.Collections.Immutable;
 using System.Reflection;
 using System.Text;
 
@@ -75,10 +77,41 @@ public class RoslynCompilationRunner(string? name = null, LanguageVersion langua
         // Compile the project
         Compilation? compilation = await Project.GetCompilationAsync();
         
-        // Do some basic checks that everything is in order
         await Assert.That(compilation).IsNotNull();
 
         return compilation!;
+    }
+
+    public async ValueTask<CompilationWithAnalyzers> GetCompilationWithAnalyzersAsync() {
+        // Resolve all assemblies
+        Project = _assemblyReferences.Aggregate(Project, (current, reference) => current.AddMetadataReference(reference));
+        
+        // Add All documents
+        foreach ((string name, StringBuilder source) in _documents) {
+            Project = Project.AddDocument(name, source.ToString()).Project;
+        }
+
+        // Add Analyzers to the compilation phase
+        var analyzers = Project.AnalyzerReferences
+            .OfType<AnalyzerImageReference>() // Ensures we only get valid analyzers
+            .SelectMany(reference => reference.GetAnalyzers(LanguageNames.CSharp))
+            .ToImmutableArray();
+        
+        // Compile the project
+        Compilation? compilation = await Project.GetCompilationAsync();
+        await Assert.That(compilation).IsNotNull();
+        
+        return compilation!.WithAnalyzers(analyzers);
+    }
+
+
+    public RoslynCompilationRunner AddDiagnosticAnalyzer<T>() where T : DiagnosticAnalyzer, new() {
+        IReadOnlyList<AnalyzerReference> currentAnalyzers = Project.AnalyzerReferences;
+        AnalyzerReference[] newAnalyzers = [new AnalyzerImageReference([new T()])];
+        
+        Project = Project.WithAnalyzerReferences(currentAnalyzers.Concat(newAnalyzers));
+        
+        return this;
     }
     
     public void Dispose() {
