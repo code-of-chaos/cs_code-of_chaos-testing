@@ -15,7 +15,7 @@ public class CompilationContainsDiagnosticAssertCondition(string expectedId)
 
     protected override string GetExpectation() => $"to have a diagnostic with Id \"{ExpectedValue}\"";
     
-    protected override AssertionResult GetResult(Compilation? actualValue, string? expectedValue) {
+    protected override Task<AssertionResult> GetResult(Compilation? actualValue, string? expectedValue) {
         if (actualValue is null) return AssertionResult.Fail("Compilation is null");
         if (expectedValue is null) return AssertionResult.Fail("Expected value is null");
         

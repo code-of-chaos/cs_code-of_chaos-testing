@@ -23,7 +23,7 @@ public static class Program {
         //      Sometimes CLI params is not the answer.
         //      Code is the true saviour
         string projects = string.Join(";", 
-            "TEMPLATE"
+            "CodeOfChaos.Testing.TUnit"
         );
         string oneLineArgs = InputHelper.ToOneLine(args).Replace("%PROJECTS%", projects);
         

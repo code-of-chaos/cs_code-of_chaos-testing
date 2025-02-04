@@ -4,9 +4,9 @@
 using CodeOfChaos.Testing.TUnit.Conditions;
 using Microsoft.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using TUnit.Assertions.AssertConditions;
 using TUnit.Assertions.AssertConditions.Interfaces;
 using TUnit.Assertions.AssertionBuilders;
-using TUnit.Assertions.AssertionBuilders.Wrappers;
 
 namespace CodeOfChaos.Testing.TUnit;
 

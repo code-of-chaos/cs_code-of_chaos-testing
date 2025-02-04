@@ -15,7 +15,7 @@ public class CompilationContainsDiagnosticsExclusivelyAssertCondition(string[] e
 
     protected override string GetExpectation() => $"to have a compilation output with the following Ids \"{ExpectedValue}\"";
     
-    protected override AssertionResult GetResult(Compilation? compilation, string[]? expectedValues) {
+    protected override Task<AssertionResult> GetResult(Compilation? compilation, string[]? expectedValues) {
         if (compilation is null) return AssertionResult.Fail("Compilation is null");
         if (expectedValues is null) return AssertionResult.Fail("Expected value is null");
         
