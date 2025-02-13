@@ -34,8 +34,8 @@
         <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.12.0" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.12.0" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.12.0" />
-        <PackageReference Include="TUnit.Assertions" Version="0.10.19" />
-        <PackageReference Include="TUnit.Core" Version="0.10.19" />
+        <PackageReference Include="TUnit.Assertions" Version="0.12.14" />
+        <PackageReference Include="TUnit.Core" Version="0.12.14" />
     </ItemGroup>
 
 </Project>

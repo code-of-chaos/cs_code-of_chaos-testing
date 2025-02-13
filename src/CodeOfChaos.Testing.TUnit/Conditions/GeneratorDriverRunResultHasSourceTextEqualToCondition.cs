@@ -10,18 +10,16 @@ namespace CodeOfChaos.Testing.TUnit.Conditions;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class GeneratorDriverRunResultHasSourceTextEqualToCondition(string filename, string expected, StringComparison stringComparison, bool ignoreWhiteSpace, bool withTrimming)
-    : ExpectedValueAssertCondition<GeneratorDriverRunResult, string>(expected) {
-    private readonly string _expected = expected;
+    : BaseAssertCondition<GeneratorDriverRunResult> {
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected override string GetExpectation() => throw new NotImplementedException();
-    protected override async Task<AssertionResult> GetResult(GeneratorDriverRunResult? runResult, string? expectedValue) {
-        if (runResult is null) return AssertionResult.Fail("Compilation is null");
-        if (expectedValue is null) return AssertionResult.Fail("Expected string is null");
+    protected override async Task<AssertionResult> GetResult(GeneratorDriverRunResult? actualValue, Exception? exception, AssertionMetadata assertionMetadata) {
+        if (actualValue is null) return AssertionResult.Fail("Compilation is null");
 
-        GeneratedSourceResult? generatedSource = runResult.Results
+        GeneratedSourceResult? generatedSource = actualValue.Results
             .SelectMany(result => result.GeneratedSources)
             .SingleOrDefault(result => result.HintName == filename);
 
@@ -32,10 +30,10 @@ public class GeneratorDriverRunResultHasSourceTextEqualToCondition(string filena
         string sourceTextString = sourceText.ToString();
 
         // Use the TUnit Equals String so it follows the same structure
-        var stringEqualsAssertCondition = new StringEqualsExpectedValueAssertCondition(_expected, stringComparison);
+        var stringEqualsAssertCondition = new StringEqualsExpectedValueAssertCondition(expected, stringComparison);
         if (withTrimming) stringEqualsAssertCondition.WithTrimming();
         if (ignoreWhiteSpace) stringEqualsAssertCondition.IgnoringWhitespace();
 
-        return await stringEqualsAssertCondition.GetAssertionResult(sourceTextString, null);
+        return await stringEqualsAssertCondition.GetAssertionResult(sourceTextString,null, assertionMetadata);
     }
 }
