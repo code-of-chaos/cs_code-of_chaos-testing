@@ -15,7 +15,7 @@ public class GeneratorDriverRunResultHasSourceTextEqualToCondition(string filena
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override string GetExpectation() => throw new NotImplementedException();
+    protected override string GetExpectation() => "to have a source with the the expected text";
     protected override async Task<AssertionResult> GetResult(GeneratorDriverRunResult? actualValue, Exception? exception, AssertionMetadata assertionMetadata) {
         if (actualValue is null) return AssertionResult.Fail("Compilation is null");
 
