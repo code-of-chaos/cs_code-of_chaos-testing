@@ -34,6 +34,6 @@ public class GeneratorDriverRunResultHasSourceTextEqualToCondition(string filena
         if (withTrimming) stringEqualsAssertCondition.WithTrimming();
         if (ignoreWhiteSpace) stringEqualsAssertCondition.IgnoringWhitespace();
 
-        return await stringEqualsAssertCondition.GetAssertionResult(sourceTextString,null, assertionMetadata);
+        return await stringEqualsAssertCondition.GetAssertionResult(sourceTextString, null, assertionMetadata);
     }
 }

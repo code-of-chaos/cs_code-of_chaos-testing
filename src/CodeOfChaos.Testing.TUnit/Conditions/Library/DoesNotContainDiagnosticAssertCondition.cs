@@ -21,7 +21,7 @@ public class DoesNotContainDiagnosticAssertCondition<T>(Func<T, ValueTask<Immuta
 
         ImmutableArray<Diagnostic> diagnostics = await getDiagnosticsAction(actualValue);
 
-        return diagnostics.Any(d => d.Id == expectedId) 
+        return diagnostics.Any(d => d.Id == expectedId)
             ? FailWithMessage("Diagnostic with Id")
             : AssertionResult.Passed;
     }

@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Testing;
 using CodeOfChaos.Testing.TUnit;
 using Microsoft.CodeAnalysis;
 using Tests.CodeOfChaos.Testing.TUnit.DataSources;

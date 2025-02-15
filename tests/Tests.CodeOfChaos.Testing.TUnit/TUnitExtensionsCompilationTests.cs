@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Testing;
 using CodeOfChaos.Testing.TUnit;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -55,7 +56,7 @@ public class TUnitExtensionsCompilationTests {
     }
 
     [Test]
-    public async Task AddDiangosticAnalyzer_ShouldAssert() {
+    public async Task AddDiagnosticAnalyzer_ShouldAssert() {
         // Arrange
         RoslynCompilationRunner runner = new RoslynCompilationRunner()
                 .AddDocument("Test.cs", """

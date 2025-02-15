@@ -14,7 +14,7 @@ public class ContainsDiagnosticAssertCondition<T>(Func<T, ValueTask<ImmutableArr
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected override string GetExpectation() => $"to have a diagnostic with Id \"{expectedId}\"";
-    
+
     protected override async Task<AssertionResult> GetResult(T? actualValue, Exception? exception, AssertionMetadata assertionMetadata) {
         if (actualValue is null) return AssertionResult.Fail($"{nameof(T)} is null");
 
