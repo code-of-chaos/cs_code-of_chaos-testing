@@ -9,14 +9,12 @@ namespace CodeOfChaos.Testing;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class RoslynGeneratorRunner(LanguageVersion languageVersion = LanguageVersion.Latest) {
-    public Compilation? Compilation { get; set; }
+    public required Compilation Compilation { get; init; }
 
     public GeneratorDriverRunResult AddGenerator(params IIncrementalGenerator[] generators) {
         GeneratorDriver driver = CSharpGeneratorDriver.Create(generators)
             .WithUpdatedParseOptions(new CSharpParseOptions(languageVersion));
-
-        if (Compilation is null) throw new InvalidOperationException("Compilation is null");
-
+        
         return driver.RunGenerators(Compilation).GetRunResult();
     }
 
