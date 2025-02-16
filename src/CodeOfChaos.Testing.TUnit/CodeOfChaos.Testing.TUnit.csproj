@@ -30,8 +30,8 @@
 
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="2024.3.0"/>
-        <PackageReference Include="TUnit.Assertions" Version="0.12.14"/>
-        <PackageReference Include="TUnit.Core" Version="0.12.14"/>
+        <PackageReference Include="TUnit.Assertions" Version="0.13.3" />
+        <PackageReference Include="TUnit.Core" Version="0.13.3" />
     </ItemGroup>
 
     <ItemGroup>

@@ -16,7 +16,7 @@ public class ContainsDiagnosticsExclusivelyAssertCondition<T>(Func<T, ValueTask<
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected override string GetExpectation() => $"to have a compilation output with the following Ids \"{expectedIds}\"";
-    protected override async Task<AssertionResult> GetResult(T? actualValue, Exception? exception, AssertionMetadata assertionMetadata) {
+    protected override async ValueTask<AssertionResult> GetResult(T? actualValue, Exception? exception, AssertionMetadata assertionMetadata) {
         if (actualValue is null) return AssertionResult.Fail($"{nameof(T)} is null");
 
         ImmutableArray<Diagnostic> diagnostics = await getDiagnosticsAction(actualValue);
