@@ -4,7 +4,28 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+
+        <!-- Main package name -->
+        <PackageId>CodeOfChaos.Testing</PackageId>
+        <Version>0.7.0</Version>
+        <Authors>Anna Sas</Authors>
+        <Description>A small library housing some common frameworks used for testing CodeOfChaos stuff</Description>
+        <PackageProjectUrl>https://github.com/code-of-chaos/cs_code-of_chaos-testing-tunit</PackageProjectUrl>
+        <PackageTags>extensions testing</PackageTags>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <DebugType>embedded</DebugType>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
+        <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
+        <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="2024.3.0"/>

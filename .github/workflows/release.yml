@@ -21,14 +21,17 @@ jobs:
                   dotnet-version: '9.x'
 
             - name: Restore dependencies
-              run: dotnet restore CodeOfChaos.Testing.TUnit.sln
+              run: dotnet restore CodeOfChaos.Testing.sln
 
             - name: Build
-              run: dotnet build CodeOfChaos.Testing.TUnit.sln --configuration Release --no-restore
+              run: dotnet build CodeOfChaos.Testing.sln --configuration Release --no-restore
             
             # Ensure that the tests must pass 
             # The job will fail automatically if any test fails because `dotnet test` exits with a non-zero code
-            - name: Run tests - Extensions
+#            - name: Run tests - Testing
+#              run: dotnet run -c Release --no-restore --no-build
+#              working-directory: "tests/Tests.CodeOfChaos.Testing"
+            - name: Run tests - Testing.TUnit
               run: dotnet run -c Release --no-restore --no-build
               working-directory: "tests/Tests.CodeOfChaos.Testing.TUnit"
 
@@ -36,4 +39,5 @@ jobs:
               env:
                   NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
               run: |
+                  dotnet nuget push src/CodeOfChaos.Testing/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
                   dotnet nuget push src/CodeOfChaos.Testing.TUnit/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate

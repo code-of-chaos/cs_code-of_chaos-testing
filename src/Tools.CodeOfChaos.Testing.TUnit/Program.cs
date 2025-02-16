@@ -22,6 +22,7 @@ public static class Program {
         //      Sometimes CLI params is not the answer.
         //      Code is the true saviour
         string projects = string.Join(";",
+            "CodeOfChaos.Testing",
             "CodeOfChaos.Testing.TUnit"
         );
 
