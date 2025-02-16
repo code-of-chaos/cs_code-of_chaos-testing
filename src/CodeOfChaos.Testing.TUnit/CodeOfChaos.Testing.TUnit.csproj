@@ -8,10 +8,10 @@
 
         <!-- Main package name -->
         <PackageId>CodeOfChaos.Testing.TUnit</PackageId>
-        <Version>0.7.1</Version>
+        <Version>0.7.2</Version>
         <Authors>Anna Sas</Authors>
         <Description>A small library housing extensions to the TUnit framework</Description>
-        <PackageProjectUrl>https://github.com/code-of-chaos/cs_code-of_chaos-testing-tunit</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/code-of-chaos/cs_code-of_chaos-testing</PackageProjectUrl>
         <PackageTags>extensions tunit testing</PackageTags>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
