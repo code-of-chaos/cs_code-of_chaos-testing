@@ -12,7 +12,7 @@ namespace Tests.CodeOfChaos.Testing.TUnit;
 // ---------------------------------------------------------------------------------------------------------------------
 public class TUnitExtensionsServiceCollectionTests {
     [Test]
-    public async Task ContainsServiceKey_ShouldAssert() {
+    public async Task ContainsServiceType_ShouldAssert() {
         // Arrange
         var services = new ServiceCollection();
         
@@ -20,11 +20,11 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton<string, string>();
 
         // Assert
-        await Assert.That(services).ContainsServiceKey<string>();
+        await Assert.That(services).ContainsServiceType<string>();
     }
     
     [Test]
-    public async Task ContainsServiceKey_ShouldThrowAssertion() {
+    public async Task ContainsServiceType_ShouldThrowAssertion() {
         // Arrange
         var services = new ServiceCollection();
         
@@ -32,11 +32,11 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton<string, string>();
         
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).ContainsServiceKey<int>());
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).ContainsServiceType<int>());
     }
     
     [Test]
-    public async Task DoesNotContainServiceKey_ShouldAssert() {
+    public async Task DoesNotContainServiceType_ShouldAssert() {
         // Arrange
         var services = new ServiceCollection();
         
@@ -44,11 +44,11 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton<string, string>();
 
         // Assert
-        await Assert.That(services).DoesNotContainServiceKey<int>();
+        await Assert.That(services).DoesNotContainServiceType<int>();
     }
     
     [Test]
-    public async Task DoesNotContainServiceKey_ShouldThrowAssertion() {
+    public async Task DoesNotContainServiceType_ShouldThrowAssertion() {
         // Arrange
         var services = new ServiceCollection();
         
@@ -56,6 +56,6 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton<string, string>();
         
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).DoesNotContainServiceKey<string>());
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).DoesNotContainServiceType<string>());
     }
 }

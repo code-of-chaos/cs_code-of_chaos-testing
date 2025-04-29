@@ -13,16 +13,16 @@ namespace CodeOfChaos.Testing.TUnit;
 // ---------------------------------------------------------------------------------------------------------------------
 // ReSharper disable once InconsistentNaming
 public static class TUnitExtensionsServiceCollection {
-    public static InvokableValueAssertionBuilder<ServiceCollection> ContainsServiceKey<TServiceKey>(this IValueSource<ServiceCollection> valueSource, [CallerArgumentExpression(nameof(valueSource))] string doNotPopulateThisValue1 = "") {
+    public static InvokableValueAssertionBuilder<ServiceCollection> ContainsServiceType<TServiceType>(this IValueSource<ServiceCollection> valueSource, [CallerArgumentExpression(nameof(valueSource))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
-            new ContainsServiceKeyCondition<TServiceKey>(),
+            new ContainsServiceTypeCondition<TServiceType>(),
             [doNotPopulateThisValue1]
         );
     }
     
-    public static InvokableValueAssertionBuilder<ServiceCollection> DoesNotContainServiceKey<TServiceKey>(this IValueSource<ServiceCollection> valueSource, [CallerArgumentExpression(nameof(valueSource))] string doNotPopulateThisValue1 = "") {
+    public static InvokableValueAssertionBuilder<ServiceCollection> DoesNotContainServiceType<TServiceType>(this IValueSource<ServiceCollection> valueSource, [CallerArgumentExpression(nameof(valueSource))] string doNotPopulateThisValue1 = "") {
         return valueSource.RegisterAssertion(
-            new DoesNotContainServiceKeyCondition<TServiceKey>(),
+            new DoesNotContainServiceTypeCondition<TServiceType>(),
             [doNotPopulateThisValue1]
         );
     }
