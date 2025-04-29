@@ -8,7 +8,7 @@ namespace CodeOfChaos.Testing.TUnit.Conditions.Library;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class ContainsServiceTypeCondition(Type serviceType) : BaseAssertCondition<IServiceCollection> {
+public class ContainsServiceImplementationCondition(Type serviceType, Type serviceImplementation) : BaseAssertCondition<IServiceCollection> {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ public class ContainsServiceTypeCondition(Type serviceType) : BaseAssertConditio
     protected override ValueTask<AssertionResult> GetResult(IServiceCollection? actualValue, Exception? exception, AssertionMetadata assertionMetadata) {
         if (actualValue is null) return AssertionResult.Fail($"{nameof(IServiceCollection)} is null");
 
-        return actualValue.Any(d => d.ServiceType == serviceType)
+        return actualValue.Any(d => d.ServiceType == serviceType && d.ImplementationType == serviceImplementation)
             ? AssertionResult.Passed
             : FailWithMessage($"No service with type {serviceType.Name} has been registered.");
     }

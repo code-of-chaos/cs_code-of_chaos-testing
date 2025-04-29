@@ -13,17 +13,49 @@ namespace CodeOfChaos.Testing.TUnit;
 // ---------------------------------------------------------------------------------------------------------------------
 // ReSharper disable once InconsistentNaming
 public static class TUnitExtensionsServiceCollection {
-    public static InvokableValueAssertionBuilder<ServiceCollection> ContainsServiceType<TServiceType>(this IValueSource<ServiceCollection> valueSource, [CallerArgumentExpression(nameof(valueSource))] string doNotPopulateThisValue1 = "") {
-        return valueSource.RegisterAssertion(
-            new ContainsServiceTypeCondition<TServiceType>(),
-            [doNotPopulateThisValue1]
-        );
-    }
+    #region ContainsService
+    public static InvokableValueAssertionBuilder<IServiceCollection> ContainsServiceType<TServiceType>(this IValueSource<IServiceCollection> valueSource, [CallerArgumentExpression(nameof(valueSource))] string doNotPopulateThisValue1 = "")
+        => valueSource.RegisterAssertion(new ContainsServiceTypeCondition(typeof(TServiceType)), [doNotPopulateThisValue1]);
+
+    public static InvokableValueAssertionBuilder<IServiceCollection> ContainsServiceType(this IValueSource<IServiceCollection> valueSource, Type serviceType, [CallerArgumentExpression(nameof(serviceType))] string doNotPopulateThisValue1 = "")
+        => valueSource.RegisterAssertion(new ContainsServiceTypeCondition(serviceType), [doNotPopulateThisValue1]);
+
+    public static InvokableValueAssertionBuilder<IServiceCollection> DoesNotContainServiceType<TServiceType>(this IValueSource<IServiceCollection> valueSource, [CallerArgumentExpression(nameof(valueSource))] string doNotPopulateThisValue1 = "")
+        => valueSource.RegisterAssertion(new DoesNotContainServiceTypeCondition(typeof(TServiceType)), [doNotPopulateThisValue1]);
+
+    public static InvokableValueAssertionBuilder<IServiceCollection> DoesNotContainServiceType(this IValueSource<IServiceCollection> valueSource, Type serviceType, [CallerArgumentExpression(nameof(serviceType))] string doNotPopulateThisValue1 = "")
+        => valueSource.RegisterAssertion(new DoesNotContainServiceTypeCondition(serviceType), [doNotPopulateThisValue1]);
+    #endregion
+
+    #region ContainsServiceImplementation
+    public static InvokableValueAssertionBuilder<IServiceCollection> ContainsServiceImplementation<TService, TImplementation>(
+        this IValueSource<IServiceCollection> valueSource,
+        [CallerArgumentExpression(nameof(valueSource))] string doNotPopulateThisValue1 = ""
+    )
+        => valueSource.RegisterAssertion(new ContainsServiceImplementationCondition(typeof(TService), typeof(TImplementation)), [doNotPopulateThisValue1]);
     
-    public static InvokableValueAssertionBuilder<ServiceCollection> DoesNotContainServiceType<TServiceType>(this IValueSource<ServiceCollection> valueSource, [CallerArgumentExpression(nameof(valueSource))] string doNotPopulateThisValue1 = "") {
-        return valueSource.RegisterAssertion(
-            new DoesNotContainServiceTypeCondition<TServiceType>(),
-            [doNotPopulateThisValue1]
-        );
-    }
+    public static InvokableValueAssertionBuilder<IServiceCollection> ContainsServiceImplementation(
+        this IValueSource<IServiceCollection> valueSource,
+        Type serviceType,
+        Type implementationType,
+        [CallerArgumentExpression(nameof(serviceType))] string doNotPopulateThisValue1 = ""
+    )
+        => valueSource.RegisterAssertion(new ContainsServiceImplementationCondition(serviceType, implementationType), [doNotPopulateThisValue1]);
+
+    public static InvokableValueAssertionBuilder<IServiceCollection> DoesNotContainServiceImplementation<TService, TImplementation>(
+        this IValueSource<IServiceCollection> valueSource,
+        [CallerArgumentExpression(nameof(valueSource))] string doNotPopulateThisValue1 = ""
+    )
+        => valueSource.RegisterAssertion(new DoesNotContainServiceImplementationCondition(typeof(TService), typeof(TImplementation)), [doNotPopulateThisValue1]);
+
+    public static InvokableValueAssertionBuilder<IServiceCollection> DoesNotContainServiceImplementation(
+        this IValueSource<IServiceCollection> valueSource,
+        Type serviceType,
+        Type implementationType,
+        [CallerArgumentExpression(nameof(serviceType))] string doNotPopulateThisValue1 = ""
+    )
+        => valueSource.RegisterAssertion(new DoesNotContainServiceImplementationCondition(serviceType, implementationType), [doNotPopulateThisValue1]);
+    #endregion
+
+
 }
