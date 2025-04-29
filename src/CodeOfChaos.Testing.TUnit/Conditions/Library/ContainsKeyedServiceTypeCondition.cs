@@ -19,22 +19,21 @@ public class ContainsKeyedServiceTypeCondition(Type serviceType, object? key) : 
         if (actualValue is null)
             return AssertionResult.Fail($"{nameof(IServiceCollection)} is null");
 
-        return actualValue.Any(descriptor =>
-            descriptor.IsKeyedService
-            && descriptor.ServiceType == serviceType
-            && CompareKeys(descriptor.ServiceKey, key)
-        )
+        return actualValue.Any(Predicate)
             ? AssertionResult.Passed
             : FailWithMessage($"No keyed service with type {serviceType.Name} and key {key} has been registered.");
     }
 
-    private static bool CompareKeys(object? descriptorKey, object? expectedKey) {
-        if (descriptorKey == null && expectedKey == null)
-            return true;
+    private bool Predicate(ServiceDescriptor descriptor) {
+        if (descriptor.ServiceKey == null && key == null)
+            return descriptor.IsKeyedService
+                && descriptor.ServiceType == serviceType;
             
-        if (descriptorKey == null || expectedKey == null)
+        if (descriptor.ServiceKey == null || key == null)
             return false;
-            
-        return descriptorKey.Equals(expectedKey) || expectedKey.Equals(descriptorKey);
+        
+        return descriptor.IsKeyedService
+            && descriptor.ServiceType == serviceType
+            && (descriptor.ServiceKey.Equals(key) || key.Equals(descriptor.ServiceKey));
     }
 }
