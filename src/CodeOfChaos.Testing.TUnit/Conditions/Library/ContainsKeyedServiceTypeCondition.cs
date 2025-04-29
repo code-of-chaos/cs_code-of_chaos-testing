@@ -1,4 +1,5 @@
-﻿// ---------------------------------------------------------------------------------------------------------------------
+﻿
+// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using Microsoft.Extensions.DependencyInjection;
@@ -21,9 +22,19 @@ public class ContainsKeyedServiceTypeCondition(Type serviceType, object? key) : 
         return actualValue.Any(descriptor =>
             descriptor.IsKeyedService
             && descriptor.ServiceType == serviceType
-            && ReferenceEquals(descriptor.ServiceKey, key)
+            && CompareKeys(descriptor.ServiceKey, key)
         )
             ? AssertionResult.Passed
             : FailWithMessage($"No keyed service with type {serviceType.Name} and key {key} has been registered.");
+    }
+
+    private static bool CompareKeys(object? descriptorKey, object? expectedKey) {
+        if (descriptorKey == null && expectedKey == null)
+            return true;
+            
+        if (descriptorKey == null || expectedKey == null)
+            return false;
+            
+        return descriptorKey.Equals(expectedKey) || expectedKey.Equals(descriptorKey);
     }
 }

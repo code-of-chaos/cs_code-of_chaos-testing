@@ -24,9 +24,17 @@ public class ContainsKeyedServiceImplementationCondition(Type serviceType, Type 
     }
 
     private bool Predicate(ServiceDescriptor descriptor) {
+        if (descriptor.ServiceKey == null && key == null)
+            return descriptor.IsKeyedService
+                && descriptor.ServiceType == serviceType
+                && descriptor.KeyedImplementationType == implementationType;
+            
+        if (descriptor.ServiceKey == null || key == null)
+            return false;
+            
         return descriptor.IsKeyedService
             && descriptor.ServiceType == serviceType
             && descriptor.KeyedImplementationType == implementationType
-            && ReferenceEquals(descriptor.ServiceKey, key);
+            && (descriptor.ServiceKey.Equals(key) || key.Equals(descriptor.ServiceKey));
     }
 }

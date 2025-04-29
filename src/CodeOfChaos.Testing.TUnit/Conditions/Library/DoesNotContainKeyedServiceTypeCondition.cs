@@ -1,4 +1,5 @@
-﻿// ---------------------------------------------------------------------------------------------------------------------
+﻿
+// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using Microsoft.Extensions.DependencyInjection;
@@ -18,12 +19,21 @@ public class DoesNotContainKeyedServiceTypeCondition(Type serviceType, object? k
         if (actualValue is null)
             return AssertionResult.Fail($"{nameof(IServiceCollection)} is null");
 
-        return actualValue.Any(descriptor =>
-            descriptor.IsKeyedService
-            && descriptor.ServiceType == serviceType
-            && ReferenceEquals(descriptor.ServiceKey, key)
-        )
+        return actualValue.Any(Predicate)
             ? FailWithMessage($"Found service of type {serviceType.Name} registered with key {key}")
             : AssertionResult.Passed;
+    }
+
+    private bool Predicate(ServiceDescriptor descriptor) {
+        if (descriptor.ServiceKey == null && key == null)
+            return descriptor.IsKeyedService
+                && descriptor.ServiceType == serviceType;
+            
+        if (descriptor.ServiceKey == null || key == null)
+            return false;
+        
+        return descriptor.IsKeyedService
+            && descriptor.ServiceType == serviceType
+            && (descriptor.ServiceKey.Equals(key) || key.Equals(descriptor.ServiceKey));
     }
 }
