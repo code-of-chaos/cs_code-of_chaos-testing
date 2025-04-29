@@ -38,9 +38,9 @@ public static class TUnitExtensionsServiceCollection {
         this IValueSource<IServiceCollection> valueSource,
         Type serviceType,
         Type implementationType,
-        [CallerArgumentExpression(nameof(serviceType))] string doNotPopulateThisValue1 = ""
+        [CallerArgumentExpression(nameof(serviceType))] string doNotPopulateThisValue1 = "", [CallerArgumentExpression(nameof(implementationType))] string doNotPopulateThisValue2 = ""
     )
-        => valueSource.RegisterAssertion(new ContainsServiceImplementationCondition(serviceType, implementationType), [doNotPopulateThisValue1]);
+        => valueSource.RegisterAssertion(new ContainsServiceImplementationCondition(serviceType, implementationType), [doNotPopulateThisValue1, doNotPopulateThisValue2]);
 
     public static InvokableValueAssertionBuilder<IServiceCollection> DoesNotContainServiceImplementation<TService, TImplementation>(
         this IValueSource<IServiceCollection> valueSource,
@@ -52,10 +52,22 @@ public static class TUnitExtensionsServiceCollection {
         this IValueSource<IServiceCollection> valueSource,
         Type serviceType,
         Type implementationType,
-        [CallerArgumentExpression(nameof(serviceType))] string doNotPopulateThisValue1 = ""
+        [CallerArgumentExpression(nameof(serviceType))] string doNotPopulateThisValue1 = "", [CallerArgumentExpression(nameof(implementationType))] string doNotPopulateThisValue2 = ""
     )
-        => valueSource.RegisterAssertion(new DoesNotContainServiceImplementationCondition(serviceType, implementationType), [doNotPopulateThisValue1]);
+        => valueSource.RegisterAssertion(new DoesNotContainServiceImplementationCondition(serviceType, implementationType), [doNotPopulateThisValue1, doNotPopulateThisValue2]);
     #endregion
 
-
+    #region ContainsKeyedService
+    public static InvokableValueAssertionBuilder<IServiceCollection> ContainsKeyedServiceType<TServiceType>(this IValueSource<IServiceCollection> valueSource, object? key, [CallerArgumentExpression(nameof(key))] string doNotPopulateThisValue1 = "")
+        => valueSource.RegisterAssertion(new ContainsKeyedServiceTypeCondition(typeof(TServiceType), key), [doNotPopulateThisValue1]);
+    
+    public static InvokableValueAssertionBuilder<IServiceCollection> ContainsKeyedServiceType(this IValueSource<IServiceCollection> valueSource, Type serviceType, object? key, [CallerArgumentExpression(nameof(serviceType))] string doNotPopulateThisValue1 = "", [CallerArgumentExpression(nameof(key))] string doNotPopulateThisValue2 = "")
+        => valueSource.RegisterAssertion(new ContainsServiceTypeCondition(serviceType), [doNotPopulateThisValue1, doNotPopulateThisValue2]);
+    
+    public static InvokableValueAssertionBuilder<IServiceCollection> DoesNotContainKeyedServiceType<TServiceType>(this IValueSource<IServiceCollection> valueSource, object? key, [CallerArgumentExpression(nameof(key))] string doNotPopulateThisValue1 = "")
+        => valueSource.RegisterAssertion(new DoesNotContainKeyedServiceTypeCondition(typeof(TServiceType), key), [doNotPopulateThisValue1]);
+    
+    public static InvokableValueAssertionBuilder<IServiceCollection> DoesNotContainKeyedServiceType(this IValueSource<IServiceCollection> valueSource, Type serviceType, object? key, [CallerArgumentExpression(nameof(serviceType))] string doNotPopulateThisValue1 = "", [CallerArgumentExpression(nameof(key))] string doNotPopulateThisValue2 = "")
+        => valueSource.RegisterAssertion(new DoesNotContainServiceTypeCondition(serviceType), [doNotPopulateThisValue1, doNotPopulateThisValue2]);
+    #endregion
 }

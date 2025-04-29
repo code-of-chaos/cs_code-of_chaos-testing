@@ -222,4 +222,119 @@ public class TUnitExtensionsServiceCollectionTests {
     }
     #endregion
 
+    #region ContainsKeyedService
+    [Test]
+    public async Task ContainsKeyedServiceType_ShouldAssert() {
+        // Arrange
+        var services = new ServiceCollection();
+        const string key = "test-key";
+
+        // Act
+        services.AddKeyedSingleton<IService, Service>(key);
+
+        // Assert
+        await Assert.That(services).ContainsKeyedServiceType<IService>(key);
+    }
+
+    [Test]
+    [Arguments(typeof(IService), typeof(Service))]
+    public async Task ContainsKeyedServiceType_ShouldAssert_FromTypes(Type service, Type implementation) {
+        // Arrange
+        var services = new ServiceCollection();
+        const string key = "test-key";
+
+        // Act
+        services.AddKeyedSingleton(service, implementation, key);
+
+        // Assert
+        await Assert.That(services).ContainsKeyedServiceType(service, key);
+    }
+
+    [Test]
+    public async Task ContainsKeyedServiceType_ShouldThrowAssertion_WhenServiceNotFound() {
+        // Arrange
+        var services = new ServiceCollection();
+        const string key = "test-key";
+
+        // Act
+        services.AddKeyedSingleton<IService, Service>(key);
+
+        // Assert
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).ContainsKeyedServiceType<int>(key)
+        );
+    }
+
+    [Test]
+    public async Task ContainsKeyedServiceType_ShouldThrowAssertion_WhenKeyNotFound() {
+        // Arrange
+        var services = new ServiceCollection();
+        const string key = "test-key";
+        const string wrongKey = "wrong-key";
+
+        // Act
+        services.AddKeyedSingleton<IService, Service>(key);
+
+        // Assert
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).ContainsKeyedServiceType<IService>(wrongKey)
+        );
+    }
+
+    [Test]
+    public async Task DoesNotContainKeyedServiceType_ShouldAssert() {
+        // Arrange
+        var services = new ServiceCollection();
+        const string key = "test-key";
+
+        // Act
+        services.AddKeyedSingleton<IService, Service>(key);
+
+        // Assert
+        await Assert.That(services).DoesNotContainKeyedServiceType<int>(key);
+    }
+
+    [Test]
+    [Arguments(typeof(IService), typeof(Service))]
+    public async Task DoesNotContainKeyedServiceType_ShouldAssert_FromTypes(Type service, Type implementation) {
+        // Arrange
+        var services = new ServiceCollection();
+        const string key = "test-key";
+
+        // Act
+        services.AddKeyedSingleton(service, implementation, key);
+
+        // Assert
+        await Assert.That(services).DoesNotContainKeyedServiceType(typeof(int), key);
+    }
+
+    [Test]
+    public async Task DoesNotContainKeyedServiceType_ShouldThrowAssertion_WhenServiceExists() {
+        // Arrange
+        var services = new ServiceCollection();
+        const string key = "test-key";
+
+        // Act
+        services.AddKeyedSingleton<IService, Service>(key);
+
+        // Assert
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).DoesNotContainKeyedServiceType<IService>(key)
+        );
+    }
+
+    [Test]
+    [Arguments(typeof(IService), typeof(Service))]
+    public async Task DoesNotContainKeyedServiceType_ShouldThrowAssertion_FromTypes_WhenServiceExists(
+        Type service, Type implementation
+    ) {
+        // Arrange
+        var services = new ServiceCollection();
+        const string key = "test-key";
+
+        // Act
+        services.AddKeyedSingleton(service, implementation, key);
+
+        // Assert
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).DoesNotContainKeyedServiceType(service, key));
+    }
+    #endregion
+
 }
