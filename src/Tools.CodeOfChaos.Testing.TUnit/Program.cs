@@ -20,8 +20,8 @@ public static class Program {
         //      Sometimes CLI params are not the answer.
         //      Code is the true savior
         string projects = string.Join(";",
-            "InfiniLore.Lucide",
-            "InfiniLore.Lucide.SourceGenerators"
+            "CodeOfChaos.Testing",
+            "CodeOfChaos.Testing.TUnit"
         );
 
         // Finally, start executing
