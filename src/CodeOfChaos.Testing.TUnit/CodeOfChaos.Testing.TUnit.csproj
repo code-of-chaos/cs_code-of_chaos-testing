@@ -29,10 +29,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.5" />
-        <PackageReference Include="TUnit.Assertions" Version="0.20.16" />
-        <PackageReference Include="TUnit.Core" Version="0.20.16" />
+        <PackageReference Include="JetBrains.Annotations" Version="2025.2.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.8" />
+        <PackageReference Include="TUnit.Assertions" Version="0.57.1" />
+        <PackageReference Include="TUnit.Core" Version="0.57.1" />
     </ItemGroup>
 
     <ItemGroup>
