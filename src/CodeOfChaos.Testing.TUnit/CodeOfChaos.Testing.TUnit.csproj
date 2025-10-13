@@ -33,7 +33,7 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.9" />
 
         <PackageReference Include="TUnit.Assertions" Version="0.66.6" />
-        <PackageReference Include="TUnit.Core" Version="0.66.6" />
+        <PackageReference Include="TUnit.Core" Version="0.67.19" />
     </ItemGroup>
 
     <ItemGroup>
