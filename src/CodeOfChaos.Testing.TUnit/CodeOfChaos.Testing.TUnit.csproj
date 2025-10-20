@@ -31,7 +31,7 @@
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="2025.2.2" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.10" />
-        <PackageReference Include="TUnit.Assertions" Version="0.67.19" />
+        <PackageReference Include="TUnit.Assertions" Version="0.73.19" />
         <PackageReference Include="TUnit.Core" Version="0.67.19" />
     </ItemGroup>
 
