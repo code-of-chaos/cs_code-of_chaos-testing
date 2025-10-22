@@ -1,11 +1,10 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Testing.TUnit.Conditions.Library;
+using CodeOfChaos.Testing.TUnit.Assertions.Library;
 using Microsoft.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using TUnit.Assertions.AssertConditions.Interfaces;
-using TUnit.Assertions.AssertionBuilders;
+using TUnit.Assertions.Core;
 
 namespace CodeOfChaos.Testing.TUnit;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -13,33 +12,45 @@ namespace CodeOfChaos.Testing.TUnit;
 // ---------------------------------------------------------------------------------------------------------------------
 // ReSharper disable once InconsistentNaming
 public static class TUnitExtensionsCompilation {
-    public static InvokableValueAssertionBuilder<Compilation> ContainsDiagnostic(this IValueSource<Compilation> valueSource, string expectedId, [CallerArgumentExpression(nameof(expectedId))] string doNotPopulateThisValue1 = "") {
-        return valueSource.RegisterAssertion(
-            new ContainsDiagnosticAssertCondition<Compilation>(
-                getDiagnosticsAction: static compilation => ValueTask.FromResult(compilation.GetDiagnostics()),
-                expectedId
-            ),
-            [doNotPopulateThisValue1]
+    public static ContainsDiagnosticAssertion<Compilation> ContainsDiagnostic(
+        this IAssertionSource<Compilation> source,
+        string expectedId,
+        [CallerArgumentExpression(nameof(expectedId))] string? expression = null
+    ) {
+        source.Context.ExpressionBuilder.Append($".{nameof(ContainsDiagnostic)}({expression})");
+
+        return new ContainsDiagnosticAssertion<Compilation>(
+            source.Context,
+            static compilation => ValueTask.FromResult(compilation.GetDiagnostics()),
+            expectedId
         );
     }
 
-    public static InvokableValueAssertionBuilder<Compilation> DoesNotContainDiagnostic(this IValueSource<Compilation> valueSource, string expectedId, [CallerArgumentExpression(nameof(expectedId))] string doNotPopulateThisValue1 = "") {
-        return valueSource.RegisterAssertion(
-            new DoesNotContainDiagnosticAssertCondition<Compilation>(
-                getDiagnosticsAction: static compilation => ValueTask.FromResult(compilation.GetDiagnostics()),
-                expectedId
-            ),
-            [doNotPopulateThisValue1]
+    public static DoesNotContainDiagnosticAssertion<Compilation> DoesNotContainDiagnostic(
+        this IAssertionSource<Compilation> source,
+        string expectedId,
+        [CallerArgumentExpression(nameof(expectedId))] string? expression = null
+    ) {
+        source.Context.ExpressionBuilder.Append($".{nameof(DoesNotContainDiagnostic)}({expression})");
+        
+        return new DoesNotContainDiagnosticAssertion<Compilation>(
+            source.Context,
+            static compilation => ValueTask.FromResult(compilation.GetDiagnostics()),
+            expectedId
         );
     }
 
-    public static InvokableValueAssertionBuilder<Compilation> ContainsDiagnosticsExclusively(this IValueSource<Compilation> valueSource, string[] expectedIds, [CallerArgumentExpression(nameof(expectedIds))] string doNotPopulateThisValue1 = "") {
-        return valueSource.RegisterAssertion(
-            new ContainsDiagnosticsExclusivelyAssertCondition<Compilation>(
-                getDiagnosticsAction: static compilation => ValueTask.FromResult(compilation.GetDiagnostics()),
-                expectedIds
-            ),
-            [doNotPopulateThisValue1]
+    public static ContainsDiagnosticsExclusivelyAssertion<Compilation> ContainsDiagnosticsExclusively(
+        this IAssertionSource<Compilation> source,
+        string[] expectedIds,
+        [CallerArgumentExpression(nameof(expectedIds))] string? expression = null
+    ) {
+        source.Context.ExpressionBuilder.Append($".{nameof(ContainsDiagnosticsExclusively)}({expression})");
+        
+        return new ContainsDiagnosticsExclusivelyAssertion<Compilation>(
+            source.Context,
+            static compilation => ValueTask.FromResult(compilation.GetDiagnostics()),
+            expectedIds
         );
     }
 }

@@ -24,7 +24,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton<IService, Service>();
 
         // Assert
-        await Assert.That(services).ContainsServiceType<IService>();
+        await Assert.That<IServiceCollection>(services).ContainsServiceType<IService>();
     }
 
     [Test]
@@ -37,7 +37,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton(service, implementation);
 
         // Assert
-        await Assert.That(services).ContainsServiceType(service);
+        await Assert.That<IServiceCollection>(services).ContainsServiceType(service);
     }
 
     [Test]
@@ -49,7 +49,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton<IService, Service>();
 
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).ContainsServiceType<int>());
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That<IServiceCollection>(services).ContainsServiceType<int>());
     }
 
     [Test]
@@ -62,7 +62,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton(service, implementation);
 
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).ContainsServiceType(typeof(int)));
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That<IServiceCollection>(services).ContainsServiceType(typeof(int)));
     }
 
     [Test]
@@ -74,7 +74,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton<IService, Service>();
 
         // Assert
-        await Assert.That(services).DoesNotContainServiceType<int>();
+        await Assert.That<IServiceCollection>(services).DoesNotContainServiceType<int>();
     }
 
     [Test]
@@ -87,7 +87,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton(service, implementation);
 
         // Assert
-        await Assert.That(services).DoesNotContainServiceType(typeof(int));
+        await Assert.That<IServiceCollection>(services).DoesNotContainServiceType(typeof(int));
     }
 
     [Test]
@@ -99,7 +99,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton<IService, Service>();
 
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).DoesNotContainServiceType<IService>());
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That<IServiceCollection>(services).DoesNotContainServiceType<IService>());
     }
 
     [Test]
@@ -112,7 +112,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton(service, implementation);
 
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).DoesNotContainServiceType(service));
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That<IServiceCollection>(services).DoesNotContainServiceType(service));
     }
     #endregion
 
@@ -126,7 +126,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton<IService, Service>();
 
         // Assert
-        await Assert.That(services).ContainsServiceImplementation<IService, Service>();
+        await Assert.That<IServiceCollection>(services).ContainsServiceImplementation<IService, Service>();
     }
 
     [Test]
@@ -139,7 +139,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton(service, implementation);
 
         // Assert
-        await Assert.That(services).ContainsServiceImplementation(service, implementation);
+        await Assert.That<IServiceCollection>(services).ContainsServiceImplementation(service, implementation);
     }
 
     [Test]
@@ -151,7 +151,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton<IService, Service>();
 
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).ContainsServiceImplementation<int, int>()
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That<IServiceCollection>(services).ContainsServiceImplementation<int, int>()
         );
     }
 
@@ -165,7 +165,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton(service, implementation);
 
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).ContainsServiceImplementation(typeof(int), typeof(int))
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That<IServiceCollection>(services).ContainsServiceImplementation(typeof(int), typeof(int))
         );
     }
 
@@ -178,7 +178,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton<IService, Service>();
 
         // Assert
-        await Assert.That(services).DoesNotContainServiceImplementation<int, int>();
+        await Assert.That<IServiceCollection>(services).DoesNotContainServiceImplementation<int, int>();
     }
 
     [Test]
@@ -191,7 +191,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton(service, implementation);
 
         // Assert
-        await Assert.That(services).DoesNotContainServiceImplementation(typeof(int), typeof(int));
+        await Assert.That<IServiceCollection>(services).DoesNotContainServiceImplementation(typeof(int), typeof(int));
     }
 
     [Test]
@@ -203,7 +203,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton<IService, Service>();
 
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).DoesNotContainServiceImplementation<IService, Service>()
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That<IServiceCollection>(services).DoesNotContainServiceImplementation<IService, Service>()
         );
     }
 
@@ -217,7 +217,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddSingleton(service, implementation);
 
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).DoesNotContainServiceImplementation(service, implementation)
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That<IServiceCollection>(services).DoesNotContainServiceImplementation(service, implementation)
         );
     }
     #endregion
@@ -233,7 +233,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddKeyedSingleton<IService, Service>(key);
 
         // Assert
-        await Assert.That(services).ContainsKeyedServiceType<IService>(key);
+        await Assert.That<IServiceCollection>(services).ContainsKeyedServiceType<IService>(key);
     }
 
     [Test]
@@ -247,7 +247,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddKeyedSingleton(service, implementation, key);
 
         // Assert
-        await Assert.That(services).ContainsKeyedServiceType(service, key);
+        await Assert.That<IServiceCollection>(services).ContainsKeyedServiceType(service, key);
     }
 
     [Test]
@@ -260,7 +260,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddKeyedSingleton<IService, Service>(key);
 
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).ContainsKeyedServiceType<int>(key)
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That<IServiceCollection>(services).ContainsKeyedServiceType<int>(key)
         );
     }
 
@@ -275,7 +275,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddKeyedSingleton<IService, Service>(key);
 
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).ContainsKeyedServiceType<IService>(wrongKey)
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That<IServiceCollection>(services).ContainsKeyedServiceType<IService>(wrongKey)
         );
     }
 
@@ -289,7 +289,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddKeyedSingleton<IService, Service>(key);
 
         // Assert
-        await Assert.That(services).DoesNotContainKeyedServiceType<int>(key);
+        await Assert.That<IServiceCollection>(services).DoesNotContainKeyedServiceType<int>(key);
     }
 
     [Test]
@@ -303,7 +303,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddKeyedSingleton(service, implementation, key);
 
         // Assert
-        await Assert.That(services).DoesNotContainKeyedServiceType(typeof(int), key);
+        await Assert.That<IServiceCollection>(services).DoesNotContainKeyedServiceType(typeof(int), key);
     }
 
     [Test]
@@ -316,7 +316,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddKeyedSingleton<IService, Service>(key);
 
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).DoesNotContainKeyedServiceType<IService>(key)
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That<IServiceCollection>(services).DoesNotContainKeyedServiceType<IService>(key)
         );
     }
 
@@ -333,7 +333,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddKeyedSingleton(service, implementation, key);
 
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).DoesNotContainKeyedServiceType(service, key));
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That<IServiceCollection>(services).DoesNotContainKeyedServiceType(service, key));
     }
     #endregion
 
@@ -348,7 +348,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddKeyedSingleton<IService, Service>(key);
 
         // Assert
-        await Assert.That(services).ContainsKeyedServiceImplementation<IService, Service>(key);
+        await Assert.That<IServiceCollection>(services).ContainsKeyedServiceImplementation<IService, Service>(key);
     }
 
     [Test]
@@ -362,7 +362,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddKeyedSingleton(service, key, implementation);
 
         // Assert
-        await Assert.That(services).ContainsKeyedServiceImplementation(service, implementation, key);
+        await Assert.That<IServiceCollection>(services).ContainsKeyedServiceImplementation(service, implementation, key);
     }
 
     [Test]
@@ -375,7 +375,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddKeyedSingleton<IService, Service>(key);
 
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).ContainsKeyedServiceImplementation<int, int>(key)
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That<IServiceCollection>(services).ContainsKeyedServiceImplementation<int, int>(key)
         );
     }
 
@@ -390,7 +390,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddKeyedSingleton<IService, Service>(key);
 
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).ContainsKeyedServiceImplementation<IService, Service>(wrongKey)
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That<IServiceCollection>(services).ContainsKeyedServiceImplementation<IService, Service>(wrongKey)
         );
     }
 
@@ -404,7 +404,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddKeyedSingleton<IService, Service>(key);
 
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).ContainsKeyedServiceImplementation<IService, IService>(key)
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That<IServiceCollection>(services).ContainsKeyedServiceImplementation<IService, IService>(key)
         );
     }
     #endregion
@@ -420,7 +420,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddKeyedSingleton<IService, Service>(key);
 
         // Assert
-        await Assert.That(services).DoesNotContainKeyedServiceImplementation<int, int>(key);
+        await Assert.That<IServiceCollection>(services).DoesNotContainKeyedServiceImplementation<int, int>(key);
     }
 
     [Test]
@@ -434,7 +434,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddKeyedSingleton(service, implementation, key);
 
         // Assert
-        await Assert.That(services).DoesNotContainKeyedServiceImplementation(typeof(int), typeof(int), key);
+        await Assert.That<IServiceCollection>(services).DoesNotContainKeyedServiceImplementation<int, int>(key);
     }
 
     [Test]
@@ -447,7 +447,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddKeyedSingleton<IService, Service>(key);
 
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).DoesNotContainKeyedServiceImplementation<IService, Service>(key)
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That<IServiceCollection>(services).DoesNotContainKeyedServiceImplementation<IService, Service>(key)
         );
     }
 
@@ -464,7 +464,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddKeyedSingleton(service, key, implementation);
 
         // Assert
-        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That(services).DoesNotContainKeyedServiceImplementation(service, implementation, key)
+        await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That<IServiceCollection>(services).DoesNotContainKeyedServiceImplementation(service, implementation, key)
         );
     }
 
@@ -479,7 +479,7 @@ public class TUnitExtensionsServiceCollectionTests {
         services.AddKeyedSingleton<IService, Service>(key);
 
         // Assert
-        await Assert.That(services).DoesNotContainKeyedServiceImplementation<IService, Service>(differentKey);
+        await Assert.That<IServiceCollection>(services).DoesNotContainKeyedServiceImplementation<IService, Service>(differentKey);
     }
     #endregion
 

@@ -75,6 +75,6 @@ public class TUnitExtensionsCompilationTests {
         ImmutableArray<Diagnostic> diagnostics = await compilation.GetAllDiagnosticsAsync();
 
         // Assert
-        await Assert.That(diagnostics).ContainsDiagnostic(SimpleDiagnosticAnalyzer.Descriptor.Id);
+        await Assert.That<ImmutableArray<Diagnostic>>(diagnostics).ContainsDiagnostic(SimpleDiagnosticAnalyzer.Descriptor.Id);
     }
 }

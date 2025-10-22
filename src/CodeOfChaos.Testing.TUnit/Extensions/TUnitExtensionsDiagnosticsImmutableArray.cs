@@ -1,12 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Testing.TUnit.Conditions.Library;
+using CodeOfChaos.Testing.TUnit.Assertions.Library;
 using Microsoft.CodeAnalysis;
 using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
-using TUnit.Assertions.AssertConditions.Interfaces;
-using TUnit.Assertions.AssertionBuilders;
+using TUnit.Assertions.Core;
 
 namespace CodeOfChaos.Testing.TUnit;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -14,33 +13,45 @@ namespace CodeOfChaos.Testing.TUnit;
 // ---------------------------------------------------------------------------------------------------------------------
 // ReSharper disable once InconsistentNaming
 public static class TUnitExtensionsDiagnosticsImmutableArray {
-    public static InvokableValueAssertionBuilder<ImmutableArray<Diagnostic>> ContainsDiagnostic(this IValueSource<ImmutableArray<Diagnostic>> valueSource, string expectedId, [CallerArgumentExpression(nameof(expectedId))] string doNotPopulateThisValue1 = "") {
-        return valueSource.RegisterAssertion(
-            new ContainsDiagnosticAssertCondition<ImmutableArray<Diagnostic>>(
-                getDiagnosticsAction: static diagnostics => ValueTask.FromResult(diagnostics),
-                expectedId
-            ),
-            [doNotPopulateThisValue1]
+    public static ContainsDiagnosticAssertion<ImmutableArray<Diagnostic>> ContainsDiagnostic(
+        this IAssertionSource<ImmutableArray<Diagnostic>> source,
+        string expectedId,
+        [CallerArgumentExpression(nameof(expectedId))] string? expression = null
+    ) {
+        source.Context.ExpressionBuilder.Append($".{nameof(ContainsDiagnostic)}({expression})");
+        
+        return new ContainsDiagnosticAssertion<ImmutableArray<Diagnostic>>(
+            source.Context,
+            static diagnostics => ValueTask.FromResult(diagnostics),
+            expectedId
         );
     }
 
-    public static InvokableValueAssertionBuilder<ImmutableArray<Diagnostic>> DoesNotContainDiagnostic(this IValueSource<ImmutableArray<Diagnostic>> valueSource, string expectedId, [CallerArgumentExpression(nameof(expectedId))] string doNotPopulateThisValue1 = "") {
-        return valueSource.RegisterAssertion(
-            new DoesNotContainDiagnosticAssertCondition<ImmutableArray<Diagnostic>>(
-                getDiagnosticsAction: static diagnostics => ValueTask.FromResult(diagnostics),
-                expectedId
-            ),
-            [doNotPopulateThisValue1]
+    public static DoesNotContainDiagnosticAssertion<ImmutableArray<Diagnostic>> DoesNotContainDiagnostic(
+        this IAssertionSource<ImmutableArray<Diagnostic>> source,
+        string expectedId,
+        [CallerArgumentExpression(nameof(expectedId))] string? expression = null
+    ) {
+        source.Context.ExpressionBuilder.Append($".{nameof(DoesNotContainDiagnostic)}({expression})");
+        
+        return new DoesNotContainDiagnosticAssertion<ImmutableArray<Diagnostic>>(
+            source.Context,
+            static diagnostics => ValueTask.FromResult(diagnostics),
+            expectedId
         );
     }
 
-    public static InvokableValueAssertionBuilder<ImmutableArray<Diagnostic>> ContainsDiagnosticsExclusively(this IValueSource<ImmutableArray<Diagnostic>> valueSource, string[] expectedIds, [CallerArgumentExpression(nameof(expectedIds))] string doNotPopulateThisValue1 = "") {
-        return valueSource.RegisterAssertion(
-            new ContainsDiagnosticsExclusivelyAssertCondition<ImmutableArray<Diagnostic>>(
-                getDiagnosticsAction: static diagnostics => ValueTask.FromResult(diagnostics),
-                expectedIds
-            ),
-            [doNotPopulateThisValue1]
+    public static ContainsDiagnosticsExclusivelyAssertion<ImmutableArray<Diagnostic>> ContainsDiagnosticsExclusively(
+        this IAssertionSource<ImmutableArray<Diagnostic>> source,
+        string[] expectedIds,
+        [CallerArgumentExpression(nameof(expectedIds))] string? expression = null
+    ) {
+        source.Context.ExpressionBuilder.Append($".{nameof(ContainsDiagnosticsExclusively)}({expression})");
+        
+        return new ContainsDiagnosticsExclusivelyAssertion<ImmutableArray<Diagnostic>>(
+            source.Context,
+            static diagnostics => ValueTask.FromResult(diagnostics),
+            expectedIds
         );
     }
 }

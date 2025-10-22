@@ -2,23 +2,31 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using Microsoft.Extensions.DependencyInjection;
-using TUnit.Assertions.AssertConditions;
+using TUnit.Assertions.Core;
 
-namespace CodeOfChaos.Testing.TUnit.Conditions.Library;
+namespace CodeOfChaos.Testing.TUnit.Assertions.Library;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class ContainsServiceTypeCondition(Type serviceType) : BaseAssertCondition<IServiceCollection> {
+public class ContainsServiceTypeAssertion(
+    AssertionContext<IServiceCollection> context,
+    Type serviceType
+) : Assertion<IServiceCollection>(context) {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected override string GetExpectation() => $"to have a registered service \"{serviceType.Name}\"";
+    
+    protected override Task<AssertionResult> CheckAsync(EvaluationMetadata<IServiceCollection> metadata) {
+        if (metadata.Exception is {} exception) return Task.FromResult(AssertionResult.Failed($"threw {exception.GetType().Name}"));
+        
+        IServiceCollection? actualValue = metadata.Value;
+        if (actualValue is null) return Task.FromResult(AssertionResult.Failed($"{nameof(IServiceCollection)} is null"));
 
-    protected override ValueTask<AssertionResult> GetResult(IServiceCollection? actualValue, Exception? exception, AssertionMetadata assertionMetadata) {
-        if (actualValue is null) return AssertionResult.Fail($"{nameof(IServiceCollection)} is null");
-
-        return actualValue.Any(d => d.ServiceType == serviceType)
+        AssertionResult result = actualValue.Any(d => d.ServiceType == serviceType)
             ? AssertionResult.Passed
-            : FailWithMessage($"No service with type {serviceType.Name} has been registered.");
+            : AssertionResult.Failed($"No service with type {serviceType.Name} has been registered.");
+        
+        return Task.FromResult(result);
     }
 }

@@ -1,11 +1,10 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Testing.TUnit.Conditions.Library;
+using CodeOfChaos.Testing.TUnit.Assertions.Library;
 using Microsoft.CodeAnalysis.Diagnostics;
 using System.Runtime.CompilerServices;
-using TUnit.Assertions.AssertConditions.Interfaces;
-using TUnit.Assertions.AssertionBuilders;
+using TUnit.Assertions.Core;
 
 namespace CodeOfChaos.Testing.TUnit;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -13,33 +12,45 @@ namespace CodeOfChaos.Testing.TUnit;
 // ---------------------------------------------------------------------------------------------------------------------
 // ReSharper disable once InconsistentNaming
 public static class TUnitExtensionsCompilationWithAnalyzers {
-    public static InvokableValueAssertionBuilder<CompilationWithAnalyzers> ContainsDiagnostic(this IValueSource<CompilationWithAnalyzers> valueSource, string expectedId, [CallerArgumentExpression(nameof(expectedId))] string doNotPopulateThisValue1 = "") {
-        return valueSource.RegisterAssertion(
-            new ContainsDiagnosticAssertCondition<CompilationWithAnalyzers>(
-                getDiagnosticsAction: async static compilation => await compilation.GetAllDiagnosticsAsync(),
-                expectedId
-            ),
-            [doNotPopulateThisValue1]
+    public static ContainsDiagnosticAssertion<CompilationWithAnalyzers> ContainsDiagnostic(
+        this IAssertionSource<CompilationWithAnalyzers> source,
+        string expectedId,
+        [CallerArgumentExpression(nameof(expectedId))] string? expression = null
+    ) {
+        source.Context.ExpressionBuilder.Append($".{nameof(ContainsDiagnostic)}({expression})");
+
+        return new ContainsDiagnosticAssertion<CompilationWithAnalyzers>(
+            source.Context,
+            async static compilation => await compilation.GetAllDiagnosticsAsync(),
+            expectedId
         );
     }
 
-    public static InvokableValueAssertionBuilder<CompilationWithAnalyzers> DoesNotContainDiagnostic(this IValueSource<CompilationWithAnalyzers> valueSource, string expectedId, [CallerArgumentExpression(nameof(expectedId))] string doNotPopulateThisValue1 = "") {
-        return valueSource.RegisterAssertion(
-            new DoesNotContainDiagnosticAssertCondition<CompilationWithAnalyzers>(
-                getDiagnosticsAction: async static compilation => await compilation.GetAllDiagnosticsAsync(),
-                expectedId
-            ),
-            [doNotPopulateThisValue1]
+    public static DoesNotContainDiagnosticAssertion<CompilationWithAnalyzers> DoesNotContainDiagnostic(
+        this IAssertionSource<CompilationWithAnalyzers> source,
+        string expectedId,
+        [CallerArgumentExpression(nameof(expectedId))] string? expression = null
+    ) {
+        source.Context.ExpressionBuilder.Append($".{nameof(ContainsDiagnostic)}({expression})");
+
+        return new DoesNotContainDiagnosticAssertion<CompilationWithAnalyzers>(
+            source.Context,
+            async static compilation => await compilation.GetAllDiagnosticsAsync(),
+            expectedId
         );
     }
 
-    public static InvokableValueAssertionBuilder<CompilationWithAnalyzers> ContainsDiagnosticsExclusively(this IValueSource<CompilationWithAnalyzers> valueSource, string[] expectedIds, [CallerArgumentExpression(nameof(expectedIds))] string doNotPopulateThisValue1 = "") {
-        return valueSource.RegisterAssertion(
-            new ContainsDiagnosticsExclusivelyAssertCondition<CompilationWithAnalyzers>(
-                getDiagnosticsAction: async static compilation => await compilation.GetAllDiagnosticsAsync(),
-                expectedIds
-            ),
-            [doNotPopulateThisValue1]
+    public static ContainsDiagnosticsExclusivelyAssertion<CompilationWithAnalyzers> ContainsDiagnosticsExclusively(
+        this IAssertionSource<CompilationWithAnalyzers> source,
+        string[] expectedIds,
+        [CallerArgumentExpression(nameof(expectedIds))] string? expression = null
+    ) {
+        source.Context.ExpressionBuilder.Append($".{nameof(ContainsDiagnostic)}({expression})");
+
+        return new ContainsDiagnosticsExclusivelyAssertion<CompilationWithAnalyzers>(
+            source.Context,
+            async static compilation => await compilation.GetAllDiagnosticsAsync(),
+            expectedIds
         );
     }
 }
