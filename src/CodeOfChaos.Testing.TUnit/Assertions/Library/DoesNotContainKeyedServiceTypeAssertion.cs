@@ -33,15 +33,11 @@ public class DoesNotContainKeyedServiceTypeAssertion(
     }
 
     private bool Predicate(ServiceDescriptor descriptor) {
-        if (descriptor.ServiceKey == null && key == null)
-            return descriptor.IsKeyedService
-                && descriptor.ServiceType == serviceType;
+        if (key == null) return !descriptor.IsKeyedService && descriptor.ServiceType == serviceType;
+        if (!descriptor.IsKeyedService) return false;
 
-        if (descriptor.ServiceKey == null || key == null)
-            return false;
-
-        return descriptor.IsKeyedService
-            && descriptor.ServiceType == serviceType
+        return descriptor.ServiceType == serviceType 
+            && descriptor.ServiceKey != null 
             && (descriptor.ServiceKey.Equals(key) || key.Equals(descriptor.ServiceKey));
     }
 }

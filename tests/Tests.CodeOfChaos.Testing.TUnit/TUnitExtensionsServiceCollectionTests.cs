@@ -330,7 +330,7 @@ public class TUnitExtensionsServiceCollectionTests {
         const string key = "test-key";
 
         // Act
-        services.AddKeyedSingleton(service, implementation, key);
+        services.AddKeyedSingleton(service, key, implementation);
 
         // Assert
         await Assert.ThrowsAsync<AssertionException>(async () => await Assert.That<IServiceCollection>(services).DoesNotContainKeyedServiceType(service, key));
