@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/.dev-tools/">
     <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
     <Project Path="src/Tools.CodeOfChaos.Testing.TUnit/Tools.CodeOfChaos.Testing.TUnit.csproj" />
   </Folder>
   <Folder Name="/.dev-tools/github/">
