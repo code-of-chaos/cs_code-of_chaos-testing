@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/.dev-tools/">
+    <File Path="Directory.Packages.props" />
+    <Project Path="src/Tools.CodeOfChaos.Testing.TUnit/Tools.CodeOfChaos.Testing.TUnit.csproj" />
+  </Folder>
+  <Folder Name="/.dev-tools/github/">
+    <File Path=".github/workflows/onPullRequest-TestDotnet.yml" />
+    <File Path=".github/workflows/release.yml" />
+    <File Path=".github/workflows/workflow-todo.yml" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/CodeOfChaos.Testing.TUnit/CodeOfChaos.Testing.TUnit.csproj" />
+    <Project Path="src/CodeOfChaos.Testing/CodeOfChaos.Testing.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Tests.CodeOfChaos.Testing.TUnit/Tests.CodeOfChaos.Testing.TUnit.csproj" />
+    <Project Path="tests/Tests.CodeOfChaos.Testing/Tests.CodeOfChaos.Testing.csproj" />
+  </Folder>
+</Solution>

@@ -13,27 +13,25 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v3
+              uses: actions/checkout@v5
 
             - name: Setup .NET
-              uses: actions/setup-dotnet@v3
+              uses: actions/setup-dotnet@v5
               with:
-                  dotnet-version: '9.x'
+                  dotnet-version: |
+                      9.x
+                      10.x
 
             - name: Restore dependencies
-              run: dotnet restore CodeOfChaos.Testing.sln
+              run: dotnet restore CodeOfChaos.Testing.slnx
 
             - name: Build
-              run: dotnet build CodeOfChaos.Testing.sln --configuration Release --no-restore
+              run: dotnet build CodeOfChaos.Testing.slnx --configuration Release --no-restore
             
             # Ensure that the tests must pass 
             # The job will fail automatically if any test fails because `dotnet test` exits with a non-zero code
-#            - name: Run tests - Testing
-#              run: dotnet run -c Release --no-restore --no-build
-#              working-directory: "tests/Tests.CodeOfChaos.Testing"
             - name: Run tests - Testing.TUnit
-              run: dotnet run -c Release --no-restore --no-build
-              working-directory: "tests/Tests.CodeOfChaos.Testing.TUnit"
+              run: dotnet test --configuration Release --no-restore --no-build
 
             - name: Publish to NuGet
               env:
