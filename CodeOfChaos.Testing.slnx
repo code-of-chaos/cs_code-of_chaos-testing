@@ -15,6 +15,5 @@
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Tests.CodeOfChaos.Testing.TUnit/Tests.CodeOfChaos.Testing.TUnit.csproj" />
-    <Project Path="tests/Tests.CodeOfChaos.Testing/Tests.CodeOfChaos.Testing.csproj" />
   </Folder>
 </Solution>
