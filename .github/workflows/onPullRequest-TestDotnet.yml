@@ -28,4 +28,4 @@ jobs:
               run: dotnet build CodeOfChaos.Testing.slnx --configuration Release --no-restore -p:GeneratePackageOnBuild=false -p:IsPackable=false
 
             - name: Run tests
-              run: dotnet test CodeOfChaos.Testing.slnx --configuration Release --no-restore --no-build
+              run: dotnet test --solution CodeOfChaos.Testing.slnx --configuration Release --no-restore --no-build
