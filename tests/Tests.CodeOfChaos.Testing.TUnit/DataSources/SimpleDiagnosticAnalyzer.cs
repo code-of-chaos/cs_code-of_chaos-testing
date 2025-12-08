@@ -12,6 +12,7 @@ namespace Tests.CodeOfChaos.Testing.TUnit.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 [SuppressMessage("MicrosoftCodeAnalysisCorrectness", "RS1038:Compiler extensions should be implemented in assemblies with compiler-provided references")]
+[SuppressMessage("MicrosoftCodeAnalysisCorrectness", "RS1041")]
 #pragma warning disable RS1036
 public class SimpleDiagnosticAnalyzer : DiagnosticAnalyzer {
 #pragma warning disable RS2008
