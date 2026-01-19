@@ -14,7 +14,7 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="5.0.0" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.1" />
     <PackageVersion Include="Moq" Version="4.20.72" />
-    <PackageVersion Include="TUnit" Version="1.9.81" />
+    <PackageVersion Include="TUnit" Version="1.12.3" />
     <PackageVersion Include="TUnit.Assertions" Version="1.9.81" />
     <PackageVersion Include="TUnit.Core" Version="1.9.81" />
   </ItemGroup>
