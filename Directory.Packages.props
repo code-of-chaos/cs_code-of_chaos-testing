@@ -16,6 +16,6 @@
     <PackageVersion Include="Moq" Version="4.20.72" />
     <PackageVersion Include="TUnit" Version="1.12.3" />
     <PackageVersion Include="TUnit.Assertions" Version="1.12.3" />
-    <PackageVersion Include="TUnit.Core" Version="1.12.3" />
+    <PackageVersion Include="TUnit.Core" Version="1.12.53" />
   </ItemGroup>
 </Project>
